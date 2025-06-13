@@ -2,72 +2,90 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dodgebucks Airdrop 💸</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DodgeBucks Meme Coin 🚀</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: #fff;
-      text-align: center;
-      padding: 40px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ffcc33, #ff6600);
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
     }
     h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5em;
+      font-size: 3em;
+      margin-bottom: 0.2em;
     }
     p {
-      font-size: 1.2rem;
-      margin-bottom: 2em;
+      font-size: 1.2em;
+      margin-top: 0;
     }
-    input, button {
-      padding: 12px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 10px;
-      margin: 10px;
-    }
-    input {
+    input[type="text"] {
+      padding: 10px;
+      font-size: 1em;
       width: 300px;
+      border-radius: 5px;
+      border: none;
+      margin-top: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     button {
-      background-color: #00ff99;
+      margin-top: 15px;
+      padding: 12px 25px;
+      font-size: 1em;
+      background-color: #222;
+      color: #ffcc33;
+      border: none;
+      border-radius: 5px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
-    #response {
+    button:hover {
+      background-color: #444;
+    }
+    #result {
       margin-top: 20px;
       font-weight: bold;
+      min-height: 24px;
     }
   </style>
 </head>
 <body>
-  <h1>🚀 Claim Free Dodgebucks ($DBUCK)</h1>
-  <p>Paste your Ethereum wallet below to get free meme coins!</p>
-  <input type="text" id="walletInput" placeholder="0xYourWalletAddress" />
-  <button onclick="claimAirdrop()">Claim Now</button>
-  <div id="response"></div>
+  <h1>DodgeBucks Meme Coin 🚀</h1>
+  <p>Enter your Ethereum wallet address to claim free DodgeBucks!</p>
+  <input id="wallet" type="text" placeholder="0xYourWalletAddress" />
+  <button onclick="claimTokens()">Claim Tokens</button>
+  <div id="result"></div>
 
   <script>
-    async function claimAirdrop() {
-      const wallet = document.getElementById('walletInput').value.trim();
-      const responseEl = document.getElementById('response');
+    async function claimTokens() {
+      const walletInput = document.getElementById('wallet');
+      const resultDiv = document.getElementById('result');
+      const wallet = walletInput.value.trim();
 
-      if (!wallet.startsWith("0x") || wallet.length !== 42) {
-        responseEl.innerText = "❌ Invalid wallet address.";
+      if (!wallet) {
+        resultDiv.textContent = 'Please enter a valid wallet address.';
         return;
       }
 
-      responseEl.innerText = "⏳ Sending DBUCK...";
+      resultDiv.textContent = 'Processing...';
+
       try {
-        const res = await fetch(`https://dodgebucks.onrender.com/claim?wallet=${wallet}`);
-        const data = await res.json();
-        if (data.message) {
-          responseEl.innerText = `✅ ${data.message}`;
+        // Change the URL to your backend API endpoint if different
+const response = await fetch(`https://dodgebucks-api.onrender.com/claim?wallet=${wallet}`);
+        const data = await response.json();
+
+        if (response.ok) {
+          resultDiv.textContent = data.message;
         } else {
-          responseEl.innerText = `⚠️ Error: ${JSON.stringify(data)}`;
+          resultDiv.textContent = data.error || 'An error occurred.';
         }
       } catch (err) {
-        responseEl.innerText = `❌ Failed to claim: ${err.message}`;
+        resultDiv.textContent = 'Failed to connect to server.';
       }
     }
   </script>

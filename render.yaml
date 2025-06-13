@@ -5,16 +5,8 @@ services:
     plan: free
     buildCommand: "npm install"
     startCommand: "npm start"
-    autoDeploy: true
     envVars:
       - key: WALLET_ADDRESS
-        sync: true
+        fromSecret: WALLET_ADDRESS
       - key: TOKEN_API
-        sync: true
-
-  - type: static
-    name: dodgebucks-frontend
-    env: static
-    plan: free
-    staticPublishPath: frontend
-    autoDeploy: true
+        fromSecret: TOKEN_API
