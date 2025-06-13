@@ -1,9 +1,18 @@
 {
-  "devDependencies": {
-    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
-    "dotenv": "^16.5.0"
+  "name": "dodgebucks",
+  "version": "1.0.0",
+  "description": "Dodgebucks Meme Coin API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
   },
+  "keywords": ["crypto", "meme-coin", "dodgebucks", "airdrop", "web3"],
+  "author": "skyboss878",
+  "license": "MIT",
   "dependencies": {
-    "express": "^5.1.0"
+    "axios": "^1.6.8",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.19.2"
   }
 }
