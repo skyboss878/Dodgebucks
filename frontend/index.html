@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dodgebucks Airdrop 💸</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5em;
+    }
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2em;
+    }
+    input, button {
+      padding: 12px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      margin: 10px;
+    }
+    input {
+      width: 300px;
+    }
+    button {
+      background-color: #00ff99;
+      cursor: pointer;
+    }
+    #response {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🚀 Claim Free Dodgebucks ($DBUCK)</h1>
+  <p>Paste your Ethereum wallet below to get free meme coins!</p>
+  <input type="text" id="walletInput" placeholder="0xYourWalletAddress" />
+  <button onclick="claimAirdrop()">Claim Now</button>
+  <div id="response"></div>
+
+  <script>
+    async function claimAirdrop() {
+      const wallet = document.getElementById('walletInput').value.trim();
+      const responseEl = document.getElementById('response');
+
+      if (!wallet.startsWith("0x") || wallet.length !== 42) {
+        responseEl.innerText = "❌ Invalid wallet address.";
+        return;
+      }
+
+      responseEl.innerText = "⏳ Sending DBUCK...";
+      try {
+        const res = await fetch(`https://dodgebucks.onrender.com/claim?wallet=${wallet}`);
+        const data = await res.json();
+        if (data.message) {
+          responseEl.innerText = `✅ ${data.message}`;
+        } else {
+          responseEl.innerText = `⚠️ Error: ${JSON.stringify(data)}`;
+        }
+      } catch (err) {
+        responseEl.innerText = `❌ Failed to claim: ${err.message}`;
+      }
+    }
+  </script>
+</body>
+</html>
