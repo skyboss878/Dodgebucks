@@ -1,14 +1,20 @@
 services:
   - type: web
-    name: dodgebucks
+    name: dodgebucks-backend
     env: node
-    region: oregon
     plan: free
-    buildCommand: npm install
-    startCommand: npm start
-    branch: main
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    autoDeploy: true
     envVars:
-      - key: WALLET
-        value: 0x373c989C2721963264932BF266605C8c7f503f65
+      - key: WALLET_ADDRESS
+        sync: true
       - key: TOKEN_API
-        value: Iuwv6Zb1dGVAoEOR-W4Z1h34T691GQiZ
+        sync: true
+
+  - type: static
+    name: dodgebucks-frontend
+    env: static
+    plan: free
+    staticPublishPath: frontend
+    autoDeploy: true
